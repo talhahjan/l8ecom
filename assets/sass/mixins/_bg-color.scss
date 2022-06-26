@@ -1,0 +1,24 @@
+
+
+@mixin bg-variant($bg, $color){
+.bg-#{$color}{
+@include gradient-bg($bg);
+color: white;
+.title{
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+a{
+color: white;
+}
+
+a:hover{
+text-decoration: underline;
+color: white;
+}
+
+}
+
+
+}

@@ -1,0 +1,226 @@
+/* login register page css start */
+.login-page{
+    color: white;
+    height: 100vh;
+    .navbar {
+     box-shadow: none;
+ height: 60px;
+ 
+ .navbar-nav {
+ .nav-item{
+     border:0;
+  display: inline-flex;
+     vertical-align: middle;
+     margin-left: 5px;
+ .nav-link{
+    position: relative;
+     color: #fff;
+     border: 0;
+     margin: 0;
+     border-radius: 3px;
+    line-height: 24px;
+     text-transform: uppercase;
+     font-size: 12px;
+     padding: 10px 15px;
+     background-color: transparent;
+     transition: 0.3s background-color 0s;
+ 
+ 
+ }
+ .nav-link:hover,& .active, &:focus{
+     border: 0 !important;
+     color: #fff !important;
+     font-weight: 500; 
+       background-color: rgba(255, 255, 255, 0.2);
+     transition: 0.3s background-color 0.2s;
+ 
+ }
+ }
+ }
+ }
+ 
+ .page-content{
+    display: flex; /* or inline-flex */
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+width: 100%;
+}
+ 
+ 
+ 
+ }
+ .navbar-transparent{
+     background: transparent;
+     border: 0;
+ a,&a:hover{
+     color: #fff;
+ }
+ }
+ 
+
+
+
+ .card-login{
+ width: 100%;
+ max-width: 300px;
+    flex-shrink: 3; /* default 1 */
+     align-self: center;
+display: none;/* for animate we use jquery fadein in script tag */
+
+img.avatar{
+position: relative;
+ width: 100px;
+ height: 100px; 
+  top: -50px;
+  left: 50%;
+transform: translateX(-50%);
+width: 100px;
+height: 100px;
+margin-bottom: -50px;
+border-radius: 50px;
+}
+
+
+
+.title{
+     font-size: 0.8rem;
+ }
+ 
+ }
+ 
+ 
+ .footer{
+     margin-top: 20px;
+width: 100%; }
+
+.result-detail{
+    font-weight: 600;
+}
+    
+
+/* product page css start */
+.page-product-listing{
+    display: flex;
+    flex-direction: column;
+justify-content: space-between;
+
+#SortMenuButton::before{
+    content: "Sort By : ";
+}
+
+
+
+    .filter{
+  display: none;
+    }
+    #filter{
+        text-transform: capitalize;
+       
+      
+    }
+    #filter i{
+        font-size: 0.9rem;
+        cursor: pointer;
+        margin:0;
+        padding:0;
+    }
+    #filter span{
+        font-size: 0.9rem;
+    }
+ .products{
+  
+width: 100%;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: space-evenly;
+.card{
+box-shadow: none;
+margin: 5px 5px;
+}
+.card-product{
+    padding: 0.25rem;
+    background-color: #fafafa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    margin: 5px 5px;
+width: 200px;
+font-size: 0.7rem;
+  .product-img {
+    position: relative;
+      img{
+        width: 100%;
+        height: 150px;
+  
+      }
+  }
+  
+  .btn-fav{
+    position: absolute;
+    top: 0;
+    right: 5px;
+  }
+  .product-detail{
+  margin: 10px 5px;
+  
+  .price{
+    color: grey;
+    font-size: 0.97rem;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+  }
+  .title{
+    margin: 10px 0;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  }
+  }
+}   
+    
+.filter{
+min-width:200px;
+    .card{
+        box-shadow: none;
+margin: 4px 0 4px 0; /* top right bottom left  */
+.filter-content{
+margin: 6px;
+&.colors{
+color: initial; /* just dummy */
+}
+&.sizes{
+    color: initial; /* just dummy */
+}
+}
+.card-header{
+            margin: 4px;
+            padding: 4px;
+            box-shadow: none;
+            background-color: #fff;
+            border: none;
+            user-select: none;
+            .title{
+                color: var(--bs-primary);
+            }
+            i{
+                cursor: pointer;
+            }
+           
+        }
+
+        ul{
+            list-style: none;
+           /*  li{
+                margin: 4px 0; 
+            }*/
+        }
+    }
+}
+
+
+
+}
+
+

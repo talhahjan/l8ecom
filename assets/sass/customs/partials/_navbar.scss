@@ -1,0 +1,64 @@
+/* navbar-light classes */
+
+.navbar {
+border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+height: 35px;
+box-sizing: border-box;
+
+
+.navbar-brand img{
+@include responsive-img(100px);
+  padding-left: 10px;
+}
+
+.navbar-nav
+{
+
+
+  .nav-item:not(:first-of-type)
+{
+    border-left: 1px solid #ccc;
+
+}
+
+
+.nav-item .nav-link span{
+font-size: 0.8rem;
+}
+
+
+    .dropdown-menu{
+left: -160px;
+ }
+
+
+
+.user-widget .login{
+  width: 200px;margin-left: 10px;margin-right: 10px;
+.dropdoown-item {
+  width: 95%
+}
+
+
+
+
+
+
+
+
+.nav-link:hover,
+&.nav-link:active,
+ {
+    color: var(--bs-primary) !important;
+  }
+
+
+}/*close user widget  */
+
+} /*close navbar-nav  */
+
+
+
+} /*close navbar  */

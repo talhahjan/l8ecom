@@ -1,0 +1,53 @@
+/* css variables colors */
+body {
+  background-color: #eeeeee;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+  height: 100vh;
+  max-width: 960px;
+
+  // background-color: #3c4858;
+  main {
+    flex-grow: 1; // assuming none of the other have flex-grow set
+  }
+}
+
+* {
+  font-family: "Roboto", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+}
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+a:hover {
+  color: var(--bs-primary);
+}
+
+i {
+  line-height: 100%;
+  vertical-align: middle;
+  padding-right: 3px;
+}
+
+i + span {
+  line-height: inherit;
+  vertical-align: middle;
+  display: inline-block;
+  text-transform: capitalize;
+  letter-spacing: normal;
+  padding-left: 2px;
+}
+
+section .card .cart-title {
+  font-family: "Courgette", cursive;
+  color: var(--bs-primary);
+}

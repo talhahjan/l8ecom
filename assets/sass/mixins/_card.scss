@@ -1,0 +1,4 @@
+@mixin card-header-variant($bg){
+ @include gradient-bg($bg);
+
+}
