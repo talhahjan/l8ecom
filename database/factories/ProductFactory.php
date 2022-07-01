@@ -42,6 +42,7 @@ class ProductFactory extends Factory
             'features'=>'[["Good Looking","washable","Shock absorbent"," Designer","Light Weight"," Comfortable"]]',
             'materials'=>'["pu","leather","fabric"]',
             'discount'=>rand(0,1),
+            'featured'=>rand(0,1),
             'discount_price'=>$this->faker->numberBetween($min=149, $max=499),
         ];
     }
