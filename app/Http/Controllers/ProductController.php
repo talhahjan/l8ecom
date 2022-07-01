@@ -25,7 +25,9 @@ class ProductController extends Controller
 
     public function index()
     {
+
         $products = Product::with('thumbnails')->paginate(20);
+
         return view('admin.product.index', compact('products'));
     }
 
@@ -59,7 +61,7 @@ class ProductController extends Controller
 
    $validatedData = $request->validate([
             'title' => 'required|max:255',
-            'description'=>'required|min:255',
+           
             'price' => 'required|numeric',
             'product_color' => 'required',
             'slug'=>'required',
@@ -70,7 +72,15 @@ class ProductController extends Controller
 
         
        // make stock by sizes jsone data 
-       $stocks=explode(',', $request->stock);
+      $stocks=explode(',',$request->stock);
+      $newStock=array();
+
+      foreach($stocks as $stock){
+          $item=explode(":", $stock);
+        array_push($newStock, $item);
+      }
+
+
        $attributes_features=explode(',', $request->features);
        $attributes_materials=explode(',', $request->materials);
 
@@ -87,7 +97,7 @@ class ProductController extends Controller
             'discount_price'=>$request->discount_price,
             'discount'=>isset($request->discount) ? 1: 0,
             'color' => $request->product_color,
-            'stock' => json_encode($stocks),
+            'stock' => json_encode($newStock),
             'size_range' =>$request->size_range,
             'origin'=>$request->origin,
             'article'=>$request->article,

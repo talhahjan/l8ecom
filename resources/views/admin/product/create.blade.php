@@ -258,14 +258,9 @@ Enable Discount             </label>
 @endforeach
 </optgroup>
 @endforeach
-
 </select>
-
   </div>
-
 <!-- size range   -->
-
-
 
 
 </div>
@@ -313,7 +308,6 @@ Enable Discount             </label>
                     </div>
                 </div>
                 <!-- stock info  card ends -->
-
 
 
 

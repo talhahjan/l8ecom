@@ -16,7 +16,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
         $table->id();
             $table->string('title');
-            $table->mediumText('description');
+            $table->mediumText('description')->nullable();
             $table->integer('discount')->default(0);
             $table->string('discount_price')->nullable();
             $table->json('stock');   // stock within size i.e {6-2,7-1} it means we have 2 pairs of size 6 and 1 of size 7

@@ -18,8 +18,8 @@ class CreateCategoriesTable extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('slug')->unique();
-            $table->foreignId('section_id')
-            ->constrained('sections')
+            $table->foreignId('section_id')->nullable()
+            ->constrained('brands')
             ->onUpdate('cascade')
             ->onDelete('cascade');
             $table->string('banner')->nullable();
