@@ -23,6 +23,7 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
-        "node-sass": "^6.0.1"
+        "node-sass": "^6.0.1",
+        "react-hook-inview": "^4.5.0"
     }
 }

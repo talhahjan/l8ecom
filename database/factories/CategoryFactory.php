@@ -31,6 +31,5 @@ class CategoryFactory extends Factory
             'section_id'=>rand(1,2),
     ];
 
-    // return ['category_id'=>1];
     }
 }

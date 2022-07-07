@@ -24,11 +24,10 @@ class SectionFactory extends Factory
     {
 
        
-       $section =$this->faker->randomElement(['mens','womens']);
        
         return [
-            'title'=>$section,
-            'slug'=>Str::slug($section),
+            'title'=>$this->faker->sentence(2),
+            'slug'=>Str::slug($this->faker->sentence(2)),
         ];
     }
 }

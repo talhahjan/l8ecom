@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-
+use App\Models\Category;
 class ProductFactory extends Factory
 {
     /**
@@ -46,4 +46,7 @@ class ProductFactory extends Factory
             'discount_price'=>$this->faker->numberBetween($min=149, $max=499),
         ];
     }
+
+
+
 }

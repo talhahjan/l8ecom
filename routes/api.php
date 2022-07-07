@@ -25,6 +25,10 @@ Route::get("product/{slug}", [ApiController::class, 'fetchProduct'])->name('prod
 Route::get("section/{section}", [ApiController::class, 'fetchSection'])->name('section');
 Route::get("category/{category}", [ApiController::class, 'fetchCategory'])->name('category');
 Route::get("brands", [ApiController::class, 'fetchBrands'])->name('brands');
+Route::get("brands/popular", [ApiController::class, 'BrandsWithLogoes'])->name('popular-brands');
+Route::get("products/latest", [ApiController::class, 'getLatestProduct'])->name('latest-products');
+Route::get("products/featured", [ApiController::class, 'getFeaturedProduct'])->name('featured-products');
+
 Route::post("login", [ApiController::class, 'login'])->name('login');
 Route::post("register", [ApiController::class, 'register'])->name('register');
 });

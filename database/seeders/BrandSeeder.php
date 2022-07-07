@@ -13,52 +13,85 @@ class BrandSeeder extends Seeder
     {
         $brand = Brand::create([
             'title' => 'Aerosoft',
+            'logo'=>'/uploads/brands/logoes/aerosoft.jpg',
         ]);
 
         $brand = Brand::create([
             'title' => 'DWD',
+            'logo'=>'/uploads/brands/logoes/dwd.jpeg',
+
         ]);
 
         $brand = Brand::create([
             'title' => 'Wofa Soft',
+            // 'logo'=>'/uploads/brands/logoes/dwd.jpeg',
+
         ]);
 
         $brand = Brand::create([
             'title' => 'Bata',
+            'logo'=>'/uploads/brands/logoes/bata.jpg',
         ]);
 
 
         $brand = Brand::create([
-            'title' => 'Service',
+            'title' => 'Servis',
+            'logo'=>'/uploads/brands/logoes/servis.png',
         ]);
+
+
+        $brand = Brand::create([
+            'title' => 'Wej',
+            'logo'=>'/uploads/brands/logoes/wej.png',
+        ]);
+
+        $brand = Brand::create([
+            'title' => 'Xara Soft',
+            'logo'=>'/uploads/brands/logoes/xara-soft.png',
+        ]);
+
+
+        $brand = Brand::create([
+            'title' => 'Star Soft',
+            'logo'=>'/uploads/brands/logoes/star-soft.jpg',
+        ]);
+
 
         $brand = Brand::create([
             'title' => 'Brightox',
+            // 'logo'=>'/uploads/brands/logoes/dwd.jpeg',
         ]);
 
         $brand = Brand::create([
             'title' => 'Urban Sole',
+            // 'logo'=>'/uploads/brands/logoes/dwd.jpeg',
         ]);
         $brand = Brand::create([
             'title' => 'Aerofit',
+            // 'logo'=>'/uploads/brands/logoes/dwd.jpeg',
         ]);
         $brand = Brand::create([
             'title' => 'Special Soft',
+            // 'logo'=>'/uploads/brands/logoes/dwd.jpeg',
         ]);
         $brand = Brand::create([
             'title' => 'True Soft',
+            // 'logo'=>'/uploads/brands/logoes/dwd.jpeg',
         ]);
 
         $brand = Brand::create([
             'title' => 'Zee Soft',
+            // 'logo'=>'/uploads/brands/logoes/dwd.jpeg',
         ]);
 
         $brand = Brand::create([
             'title' => 'CatterPiller',
+            'logo'=>'/uploads/brands/logoes/dwd.jpeg',
         ]);
 
         $brand = Brand::create([
             'title' => 'Clark',
+            // 'logo'=>'/uploads/brands/logoes/dwd.jpeg',
         ]);
 
 

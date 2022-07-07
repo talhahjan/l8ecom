@@ -131,128 +131,44 @@ $validator = Validator::make($request->all(),[
       }
       
       function fetchProduct(Request  $request){
-      $product=Product::with('thumbnails','categories')->where('slug', $request->slug)->first();
-      if(!$product)
-      return response()->json([ 
-        'response'=>[  
-        'status'=>404,
-      'message'=>'Page Not Found'
-      ],
-
-      ]);
-       $sections=Section::with('categories')->where('status', 1)->get();
-    
-
-       
-       return response()->json([ 
-      'response'=>[  
-       'status'=>201,
-       'message'=>'ok'
-    ],
-'data'=>
-['product'=>$product,
-'sections'=>$sections,]
-
-     ]);
+      $product=Product::with('thumbnails','categories')->where('slug', $request->slug)->firstOrFail(); 
+      return response()->json($product);
      }
  
 
 
     function fetchCategory(Request $request){
-         
-$categories = category::with(['products' => function($query){
-  $query->with(['thumbnails','categories'=> function($query){
-    $query->with('section');
-  }]); //you may use any condition here or manual select operation
-}])->where('slug', $request->category)->first();
+define('SLUG', $request->category);
+$products=Product::with(['thumbnails','categories'=> function($query){
+  $query->with('section');
+}])->whereHas('categories', function ($query) {
+  $query->where('slug', SLUG);
+})->paginate(10);
 
-if(!$categories)
-return  response()->json([
-'response'=>[  
-  'status'=>404,
-  'message'=>'Oops: Page Not Found'
-],]);
-
-$obj=['sections'=>ApiController::fetchSections()];
-$pbj['products']=array();
-$init=0;
-foreach($categories->products as $product){
-  $init++;
-  $obj['products'][$init-1]=$product;
-}
-$obj['result']['total']=$init;
-
-return response()->json([ 
-  'response'=>[ 
-  'status'=>201,
-  'message'=>'ok'
-],
-'data'=>
-$obj
- ]);
+return response()->json(
+$products
+ );
 }
 
-  
-function fetchSection(Request $request){
-         
-$section=Section::all();
-  $sections = Section::with(['categories' => function($query){
-    $query->with(['products'=> function($query){
-      $query->with(['thumbnails','categories'=> function($query){
-        $query->with('section');
-      }]);
-    }]); //you may use any condition here or manual select operation
-  }])->where('slug', $request->section)->first();
-  if(!$sections)
-  return  response()->json([
-  'response'=>[  
-    'status'=>404,
-    'message'=>'Oops: Page Not Found'
-  ],]);
-  
-$obj=['sections'=>$section];
-  $obj['products']=[];
-  $init=0;
- 
-
-
-foreach($sections->categories as $category){
-  //count categgories
-foreach($category->products as $product){
-  //play with products
-$init++;
-  $obj['products'][$init-1]=$product;
-}
-
-}
-$obj['result']['total']=count($obj['products']);
-
-
-  return response()->json([ 
-    'response'=>[ 
-    'status'=>201,
-    'message'=>'ok'
-  ],
-  'data'=>
-  $obj
-   ]);
-  }
-  
+    
+  function fetchSection(Request $request){
+  define('SLUG', $request->section);
+$products=Product::with(['thumbnails','categories'=> function($query){
+  $query->with('section');
+}])->whereHas('categories', function ($query) {
+  $query->whereHas('section', function($query){
+    $query->where('slug',SLUG);
+  });
+})->paginate(10);
+    
+    return response()->json(
+    $products
+     );
+    }
+    
     
 
-
-
-
-
-
-
-
-
-
-
-
-
-  private function getlatestProduct(){
+public function getLatestProduct(){
     $products=Product::with(['thumbnails','categories'=> function($query){
       $query->with('section');
     }])->orderBy('created_at', 'DESC')->take(10)->get();
@@ -264,7 +180,7 @@ $obj['result']['total']=count($obj['products']);
     
     
     
-    private function getfeaturedProduct(){
+    public function getFeaturedProduct(){
       $products=Product::with(['thumbnails','categories'=> function($query){
         $query->with('section');
       }])->where('featured',1)->orderBy('created_at', 'DESC')->take(10)->get();
@@ -278,21 +194,17 @@ $obj['result']['total']=count($obj['products']);
 
      function fetchSections(){
      $sections=SECTION::with('categories')->get();
-     $obj['sections']=$sections;
-     $obj['latest']=$this->getlatestProduct();
-     $obj['featured']=$this->getfeaturedProduct();
-     $obj['brandsWithLogoes']=$this->BrandsWithLogoes();
-    return $obj;
+     
+    return $sections;
     }
 
         
 
 
 
-          function fetchBrands(Request $request){
-            $data = Brand::get();
-
-   return $data;
+ function fetchBrands(Request $request){
+ $data = Brand::get();
+ return $data;
      }
 
 

@@ -26,20 +26,15 @@ class DatabaseSeeder extends Seeder
           CategorySectionSeeder::class,
               ]);
 
-            
-
-
-
-
-        
-
-
+// The Perfect way to create fake data 
               Category::factory()->count(20)->
-              has(Product::factory()->count(rand(50,150))->has(
+              has(Product::factory()->count(rand(50,100))->has(
                 Thumbnail::factory()
                         ->count(rand(1,6))
                         ->state(function (array $attributes, Product $product) {
                             return ['product_id' => $product->id];
                         })
               ))->create();
-}}
+
+                    }}
+    
