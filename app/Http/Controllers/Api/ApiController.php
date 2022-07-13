@@ -122,10 +122,10 @@ $validator = Validator::make($request->all(),[
         'avatar'=>is_link($userInfo->profile->avatar) ? $userInfo->profile->avatar: asset($userInfo->profile->avatar),
         'country'=>$userInfo->country,
        'state'=>$userInfo->state,
-        'city'=>$userInfo->city
+        'city'=>$userInfo->city,
        ],
          'token'=>$token,
-         'message'=>'Register Successfully'
+         'message'=>'Login Successfully'
         ]);
       }
       }
@@ -178,8 +178,34 @@ public function getLatestProduct(){
     }
     
     
+    public function userFavorites(){
+      $userId=auth()->user()['id'];
+   
+$cart=User::with('favorites')->where('id', $userId)->first();
+ return response()->json(
+ $cart->favorites
+  );
+    }
+
     
+    public function userCart(Request $request){
+      $userId=auth()->user()['id'];
+   
+      if($userId){
+      return response()->json([
+        'staus'=>202,
+        'message'=>'Please login to view cart',
+      ]);
+    }
+
+      $cart=User::find($userId)->with('cart')->first();
     
+    return response()->json(
+    $cart
+    );
+    }
+
+
     public function getFeaturedProduct(){
       $products=Product::with(['thumbnails','categories'=> function($query){
         $query->with('section');

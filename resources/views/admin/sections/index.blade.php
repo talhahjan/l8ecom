@@ -1,6 +1,6 @@
 @extends('layouts.Admin.admin')
 
-@section('title', 'Admin dashboard :: section')
+@section('title', 'Admin dashboard :: Product')
 
 @section('breadcrumbs')
 <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Dashboard</a></li>
@@ -11,7 +11,6 @@
 <section class="content" style="padding:20px">
     <div class="container-fluid">
 
-
         @if (session()->has('message'))
         <div class="col-md-12">
             <div class="alert alert-success">
@@ -20,7 +19,6 @@
 
         </div>
         @endif
-
 
         @if (session()->has('error'))
         <div class="col-md-12">
@@ -32,6 +30,12 @@
         @endif
 
 
+        <div class="col-md-12">
+            <div class="alert" id="alert">
+            </div>
+
+        </div>
+
 
 
         <div class="card">
@@ -41,15 +45,15 @@
                 <a href="{{route('admin.section.create')}}"><button class="btn btn-outline-primary btn-sm float-right"><i class="fa fa-plus-circle"></i> Add
                         Section</button></a>
             </div><!-- card header -->
-
             <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
-                    <thead>
+                   <thead>
                         <tr>
                             <th>#</th>
                             <th>Title</th>
                             <th>description</th>
                             <th>Total Cats</th>
+                          
                             <th>slug</th>
                             <th>Action</th>
 
@@ -63,6 +67,7 @@
                             <td>{{$section->title}} </td>
                             <td>{{!! $section->description !!}}</td>
                             <td>{{count($section->categories)}}</td>
+                         
 
                             <td>{{$section->slug}}</td>
                             <td>
@@ -106,76 +111,44 @@
 
     </div>
 </section>
-
 @endsection
 
-
 @section('Css')
-
 
 @endsection
 
 
 @section('JsScript')
-
-
-<script src="{{asset('assets/admin_plugins/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
 <script>
-    $("#inputGroupFile01").change(function(event) {
-        RecurFadeIn();
-        readURL(this);
-    });
-    $("#inputGroupFile01").on('click', function(event) {
-        RecurFadeIn();
-    });
-    const readURL = (input) => {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            var filename = $("#inputGroupFile01").val();
-            filename = filename.substring(filename.lastIndexOf('\\') + 1);
-            reader.onload = function(e) {
-                debugger;
-                $('#blah').attr('src', e.target.result);
-                $('#blah').attr('class', 'rounded-circle');
-                $('#blah').hide();
-                $('#blah').fadeIn(500);
-                $('.custom-file-label').text(filename);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
+const notify = (type, msg) => {
+    switch (type) {
+        case 'success':
+            toastr.success(msg);
+            break;
+        case 'danger':
+            toastr.error(msg);
+            break;
+        case 'warning':
+            toastr.warning(msg);
+            break;
+        case 'alert':
+            toastr.alert(msg);
+            break;
+        case 'info':
+            toastr.info(msg);
+            break;
+
     }
-    const RecurFadeIn = () => {
-        console.log('ran');
-        FadeInAlert("Wait for it...");
-    }
-    const FadeInAlert = (text) => {
-        $(".alert").show();
-        $(".alert").text(text).addClass("loading");
-    }
-    const notify = (type, msg, title = 'Alert !') => {
-        $.notify({
-            title: `<strong>${title}</strong>`,
-            icon: type == 'success' ? 'fa fa-check' : 'fa fa-ban',
-            message: msg
-        }, {
-            type: type,
-            animate: {
-                enter: 'animated fadeInUp',
-                exit: 'animated fadeOutRight'
-            },
-            placement: {
-                from: "bottom",
-                align: "right"
-            },
-            offset: 20,
-            spacing: 10,
-            z_index: 1031,
-        });
-    }
+
+
+}
+
+
     const deleteSection = (selector) => {
         const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         const row = $(selector).parent().parent().parent();
         const id = $(row).attr('id');
+
         $.ajax({
             url: "{{route('admin.section.destroy',1)}}",
             type: "POST",
@@ -194,31 +167,37 @@
             },
         });
     }
+
     const confirmDelete = (selector) => {
         let choice = confirm("Are You sure, You want to Delete this record ? All its Sub-categories will also be deleted ");
         if (choice) {
             deleteSection(selector);
         }
     }
-    const changeStatus = (selector) => {
+    function changeStatus(selector) {
+
         const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        const currentStatus = $(selector).hasClass('fa-eye-slash') ? 0 : 1;
-        const id = $(selector).parent().parent().parent().parent().attr('id');
-        // console.log(id)
+        const _token = $('meta[name="csrf-token"]').attr('content');
+        let currentStatus = $(selector).hasClass('fa-eye-slash') ? 0 : 1;
+        let id = $(selector).parent().parent().parent().parent().attr('id');
+        console.log(id)
         $.ajax({
             url: "{{route('admin.section.changestatus')}}",
             type: "POST",
             data: {
-                'record_id': id,
-                '_token': CSRF_TOKEN,
+                record_id: id,
+                _token: _token,
                 'currentstatus': currentStatus,
             },
+
             success: function(response) {
-                // console.log(response);
+                console.log(response);
                 notify(response.type, response.msg);
                 $(selector).toggleClass('fa-eye fa-eye-slash');
             },
         });
+
+
     }
 </script>
 @endsection

@@ -21,19 +21,29 @@ class ThumbnailFactory extends Factory
      *
      * @return array
      */
+
+
+
+private $images=null;
+
+
+public function getImages(){
+if($this->images)
+return $this->images;
+
+
+$images=file_get_contents('https://fakestoreapi.com/products');
+$this->images=json_decode($images,true);
+return $this->images;
+    
+}
+
     public function definition()
     {
-$categories=['shoes','fashion'];
+    $this->getImages();
 
-
-        $url = "https://api.lorem.space/image/".$categories[rand(0,1)]."?w=400&h=500";
-        $file = file_get_contents($url);
-        $name = substr($url, strrpos($url, '/') + 1);
-
-$saveAs= 'uploads/products/thumbnails/'.Str::slug($this->faker->unique->sentence(3)).'.jpg';
-                file_put_contents($saveAs, $file) ;               
         return [
-       'path'=> $saveAs,
+       'path'=> $this->images[rand(0,19)]['image'],
         ];
     }
 }

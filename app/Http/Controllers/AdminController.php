@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Section;
+use App\Models\User;
 use Auth;
 
 class AdminController extends Controller
@@ -15,7 +16,9 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-
+        $fav=User::find(1)->with('favorites')->first();
+        dd($fav);
+        
 
         return view('admin.dashboard');
     }

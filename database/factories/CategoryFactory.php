@@ -14,7 +14,6 @@ class CategoryFactory extends Factory
      */
     protected $model = Category::class;
 
-
     /**
      * Define the model's default state.
      *
@@ -22,6 +21,14 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
+
+
+
+
+
+
+
+
         $title=$this->faker->unique()->sentence(3);
         return [
             'title' => $title,

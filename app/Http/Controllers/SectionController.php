@@ -160,17 +160,12 @@ return back()->with('message', 'Section has been updated success fully') ;
 
     public function destroy(Request $request)
     {
-
-        //  $res=User::where('id', $request->record_id)->delete();
-        // $res2=Profile::where('id', $request->section_id)->delete();
-        $res = true;
-        $res2 = true;
-
+        $delete = Section::where('id', $request->record_id)->delete();
         $obj = array();
         $obj['msg'] = 'Error deleting Record';
         $obj['type'] = 'danger';
 
-        if ($res) {
+        if ($delete) {
             $obj['msg'] = 'Record has been deleted successfully';
             $obj['type'] = 'success';
         }

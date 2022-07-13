@@ -37,6 +37,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function favorites()
+    {
+        return $this->belongsToMany('App\Models\Product', 'favorite_user');
+    }
+
+
+    public function cart()
+    {
+        return $this->belongsToMany('App\Models\Product', 'cart_user');
+    }
 
     public function role()
     {

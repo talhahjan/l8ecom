@@ -1,6 +1,6 @@
 @extends('layouts.Admin.admin')
 
-@section('title', 'Admin dashboard :: Edit Product')
+@section('title', 'Admin dashboard :: Add Product')
 
 @section('breadcrumbs')
 <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Dashboard</a></li>
@@ -47,11 +47,10 @@
                     </div>
 
                     <div id="collapseCommon" class="collapse show" aria-labelledby="common" data-parent="#accordion">
-                        <div class="card-body">
-                            <div class="form-group">
+                    <div class="form-group">
                                 <label for="title">Title</label>
-                                <input type="text" name="title" id="title" class="form-control" placeholder="Enter Title" value="{{$product->title}}">
-                                <p class="small">{{config('app.url')}}<span id="url">{{$product->slug}}</span></p>
+                                <input type="text" name="title" id="title" value="{{$product->title}}" class="form-control" placeholder="Enter Title">
+                                <p class="small">{{config('app.url')}}products/<span id="url">{{$product->slug}}</span></p>
                                 <input type="hidden" name="slug" id="slug" value="{{$product->slug}}">
                             </div>
 
@@ -59,7 +58,7 @@
                                 <label for="description">Description</label>
 
                                 <textarea name="description" id="description" class="textarea" placeholder="Describe category" style="width: 100%; height: 300px;overflow-y:scroll; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
-                            {!!$product->description!!}
+                                {{$product->description}}
 
                                 </textarea>
                             </div>
@@ -72,7 +71,7 @@
                                       
 <select name="brand_id" id="brand_id" class="form-control select2">
 @foreach($brands as $brand)
-<option value="{{$brand->id}}"{{$product->brand_id==$brand->id ? ' selected': ''}}>{{$brand->title}}</option>
+<option value="{{$brand->id}}" {{$product->brand_id==$brand->id ? ' selected': ''}}>{{$brand->title}}</option>
 @endforeach
 </select>
 
@@ -82,7 +81,7 @@
                                     <label for="status">Visibility</label>
                                     <select type="text" name="status" class="custom-select" id="status">
                                         <option value="1"{{$product->status==1 ? ' selected': ''}}>Visible</option>
-                                        <option value="0"{{$product->status==0 ? ' selected': ''}}>Invisible</option>
+                                        <option value="0"{{$product->slug==0 ? ' selected': ''}}>Invisible</option>
                                     </select>
                                 </div>
                             </div>
@@ -92,29 +91,42 @@
                 </div>
                 <!-- common card ends  -->
 
-                <!-- card thumbnails starts -->
-                <div class="card">
-                    <div class="card-header" id="Thumbnails">
-                        <h5 class="mb-0">
-                            <button type="button" class="btn btn-outline collapsed" data-toggle="collapse" data-target="#collapseThumbnails" aria-expanded="false" aria-controls="collapseThumbnails">
-                                <strong> Thumbnails</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="collapseThumbnails" class="collapse" aria-labelledby="Thumbnails" data-parent="#accordion">
-                        <div class="card-body">
-                            <div class="upload__box">
-                                <div class="upload__img-wrap"></div>
-                                <div class="upload__btn-box">
-                                    <label class="upload__btn btn btn-outline-primary btn-block btn-sm"><i class="fas fa-upload"></i> Upload Multiple Images
-                                        <input type="file" multiple="" data-max_length="20" name="thumbnails[]" class="upload__inputfile">
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+ <!-- card thumbnails starts -->
+ <div class="card">
+          <div class="card-header" id="Thumbnails">
+            <h5 class="mb-0">
+              <button type="button" class="btn btn-outline collapsed" data-toggle="collapse" data-target="#collapseThumbnails" aria-expanded="false" aria-controls="collapseThumbnails">
+                <strong> Thumbnails</strong>
+              </button>
+            </h5>
+          </div>
+          <div id="collapseThumbnails" class="collapse" aria-labelledby="Thumbnails" data-parent="#accordion">
+            <div class="card-body">
+              @if($product->has('thumbnails'))
+              <div class="row">
+                @foreach($product->thumbnails as $thumbnail)
+                <div class="text-center thumbnail-{{$thumbnail->id}} col" id="thumbnail">
+                  <img id="blah" class="img-thumbnail" src="{{asset($thumbnail->path)}}" alt="your image">
+                  <a href="#" id="btn-del" class="btn btn-danger btn-sm" onclick="confirmDelete({{$thumbnail->id}})">
+                    <i class="fa fa-trash"></i></a>
                 </div>
-                <!-- Thumbnails card ends -->
+                @endforeach
+              </div>
+              @endif
+
+              <div class="upload__box">
+                <div class="upload__img-wrap"></div>
+                <div class="upload__btn-box">
+                  <label class="upload__btn btn btn-outline-primary btn-block btn-sm"><i class="fas fa-upload"></i> Upload Multiple Images
+                    <input type="file" multiple="" data-max_length="20" name="thumbnails[]" class="upload__inputfile">
+                  </label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- Thumbnails card ends -->
 
                 <!-- card Pricing  starts -->
                 <div class="card">
@@ -137,7 +149,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">$</span>
                                             </div>
-                                            <input type="text" name="price" placeholder="00.00" class="form-control" value="{{$product->price}}">
+                                            <input type="number" name="price" value="{{$product->price}}" placeholder="00.00" class="form-control">
                                             <div class="input-group-append">
                                                 <span class="input-group-text">.00</span>
                                             </div>
@@ -153,7 +165,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">$</span>
                                             </div>
-                                            <input type="text" name="discount_price" placeholder="00.00" value="{{$product->discount_price}}" class="form-control">
+                                            <input type="number" name="discount_price" value="{{$product->discount_price}}" placeholder="00.00"  class="form-control">
                                             <div class="input-group-append">
                                                 <span class="input-group-text">.00</span>
                                             </div>
@@ -162,9 +174,9 @@
                                         </div>
 
                                         <div class="form-check my-2">
-                 <input class="form-check-input" name="discount" type="checkbox" value="1" id="flexCheckChecked" {{$product->discount==1 ? ' checked': ''}}>
+                 <input class="form-check-input" name="discount" type="checkbox" value="1" id="flexCheckChecked"{{$product->discount==1 ? ' checked': ''}}>
                  <label class="form-check-label" for="flexCheckChecked">
-Enable Discount                 </label>
+Enable Discount             </label>
              </div>
 
                                     </div>
@@ -187,8 +199,7 @@ Enable Discount                 </label>
                         </h5>
                     </div>
                     <div id="collapseCategorization" class="collapse" aria-labelledby="Categorization" data-parent="#accordion">
-                        <div class="card-body">
-                          
+                        <div class="card-body">                    
 <select  id="categories" data-placeholder="Select a categories single or multiple" class="select2 form-control" name="categories[]" multiple="multiple" style="width: 100%;">
 @foreach($sections as $section)
 <optgroup label="{{$section->title}}">
@@ -200,6 +211,8 @@ Enable Discount                 </label>
 </optgroup>
 @endforeach
 </select>
+
+
                         </div>
                     </div>
                 </div>
@@ -218,7 +231,7 @@ Enable Discount                 </label>
                     <div id="collapseFeatured" class="collapse" aria-labelledby="Featured" data-parent="#accordion">
                         <div class="card-body">
                             <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" type="checkbox" name="featured" value="1" id="featured"{{$product->featured ? ' checked': ''}}>
+                                <input class="custom-control-input" name="featured" value="1" type="checkbox" id="featured" {{$product->featured==1 ? ' checked': ''}}>
                                 <label for="featured" class="custom-control-label">make this Product featured Product</label>
                             </div>
 
@@ -250,24 +263,19 @@ Enable Discount                 </label>
 
 <!-- size range   -->
 <div class="form-group">
-    <label for="product_color">Size range</label>
+    <label for="size_range">Size range</label>
 <select name="size_range" id="size_range" class="custom-select">
 <option value="0">Select Size Range</option>
 @foreach($sizes as $key => $val)
 <optgroup label="{{$key}}">
-@foreach($val as $key1=> $val1)
-<option value="{{$val1}}"{{$product->size_range==$val1 ? 'selected': ''}}>{{$key1}} {{$val1}}</option>
+@foreach($val as $key=> $val)
+<option value="{{$val}}"{{$product->size_range==$val ? 'selected': ''}}>{{$key}} {{$val}}</option>
 @endforeach
 </optgroup>
 @endforeach
-
 </select>
-
   </div>
-
 <!-- size range   -->
-
-
 
 
 </div>
@@ -276,10 +284,27 @@ Enable Discount                 </label>
 <!-- stock availibilty by size  -->
 <div class="form-group">
     <label for="stock">Stock Availibility By Size</label>
-    <input type="text" class="form-control" id="stock" value="{{$stock}}" name="stock" placeholder="1-2, 2-3" >
-    <small class="form-text text-muted">Please tell us how many pairs of which size you have in this product i.e {1-2, 2-3} means you have 2 pairs of size 1 and 3 pairs of size 2</small>
+    @php
+    $stocks=json_decode($product->stock);
+$stock='';
+$count=0;
+    foreach($stocks as $size){
+$stock.=$size[0].':'.$size[1];
+$count++;
+if($count<count($stocks))
+$stock.=',';
+
+    }
+    @endphp
+   
+
+
+    <input type="text" class="form-control" id="stock"  name="stock" value="{{$stock}}" placeholder='1:2, 2:3, 3:5'>
+    <small class="form-text text-muted">Please tell us how many pairs of which size you have in this product i.e "1":2, "2":3 means you have 2 pairs of size 1 and 3 pairs of size 2</small>
   </div>
 <!-- stock availibilty by size  -->
+
+
 </div>
 
 <div class="col-md">
@@ -288,10 +313,10 @@ Enable Discount                 </label>
 
 <div class="form-group">
     <label for="product_color">Color of Product</label>
-<select name="product_color" id="product_color" data-placeholder="Select a color of product" class="select2 form-control" style="width: 100%;">
+    <select name="product_color" id="product_color" class="custom-select select2">
     <option value="">Select Color</option>
- @foreach($colors as $key2=> $val2)
-<option value="{{$key2}}"{{$product->color==$key2 ? ' selected': ''}}>{{$key2}}</option>
+ @foreach($colors as $key=> $val)
+<option value="{{$key}}"{{$product->color==$key ? ' selected': ''}}>{{$key}}</option>
 @endforeach
 
     </select>
@@ -316,41 +341,66 @@ Enable Discount                 </label>
 
 
 
-
                 <!-- card Extras starts -->
                 <div class="card">
                     <div class="card-header d-flex" id="Extras">
                         <h5 class="mb-0">
                             <button type="button" class="btn btn-outline collapsed" data-toggle="collapse" data-target="#collapseExtras" aria-expanded="false" aria-controls="collapseExtras">
-                                <strong> Extras</strong>
+                                <strong> Attributes</strong>
                             </button>
-
                         </h5>
-                        <span class="ml-auto" id="collapseExtras">
-                            <button type="button" id="btn-add" class="btn  btn-outline-primary btn-sm" style="display:inline">+</button>
-                            <button type="button" id="btn-remove" class="btn btn-outline-danger btn-sm" style="display:inline">-</button>
-                        </span>
+                    
                     </div>
                     <div id="collapseExtras" class="collapse" aria-labelledby="Extras" data-parent="#accordion">
-                        
-                    
-                    <div class="card-body" id="extras">
-@foreach($options as $key =>$val)
-<div class="m-2 p-2 d-flex">
-<span class="m-2 text-dark text-bold" >{{$key}}</span>
-<input class="form-control" value="{{$val}}"  name="extras[{{$key}}]" />
-<button class="btn btn-sm btn-danger pull-right" onClick="return removeThis(this)">  <i class="fa fa-trash"></i></button>
+                        <div class="card-body" id="extras">
+                          <div class="m-2 p-2 d-flex">
+
+                          <span class="m-2 text-dark text-bold" >Origin</span>
+<input class="form-control" name="origin" value="{{$product->origin}}" />
+
+</div>
+                        <div class="m-2 p-2 d-flex">
+
+<span class="m-2 text-dark text-bold" >Article</span>
+<input class="form-control" type="text"  value="{{$product->article}}"  />
 </div>
 
-@endforeach
+
+<div class="m-2 p-2 d-flex">
+@php
+$materials=json_decode($product->materials);
+$features=json_decode($product->features);
+
+$material=implode(',',$materials);
+$feature=implode(',',$features);
+
+@endphp
+<span class="m-2 text-dark text-bold" >Material</span>
+<input class="form-control" type="text"  name="materials" data-role="tagsinput" value="{{$material}}" />
+
+</div>
+
+
+<div class="m-2 p-2 d-flex">
+
+<span class="m-2 text-dark text-bold" >Warranty</span>
+<input class="form-control" type="text"  name="warranty" value="{{$product->warranty}}" />
+</div>
+
+
+
+<div class="m-2 p-2 d-flex">
+
+<span class="m-2 text-dark text-bold" >Features</span>
+<input class="form-control" type="text"  name="features" data-role="tagsinput" value="{{$feature}}"  />
+
+</div>
+
+
                         </div>
                     </div>
                 </div>
                 <!-- Extras card ends -->
-
-
-
-
                 <div>
                     <button type="submit" type="submit" class="btn btn-block btn-outline-primary"><i class="fas fa-plus-circle"></i> Add Product</button>
                 </div>
@@ -367,10 +417,14 @@ Enable Discount                 </label>
 
 @section('Css')
 <!-- Select2 -->
-<link rel="stylesheet" href="{{asset('assets/admin_plugins/select2/css/select2.min.css')}}">
-<link rel="stylesheet" href="{{asset('assets/admin_plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset('assets/admin_plugins/select2/css/select2.min.css')}}" />
+<link rel="stylesheet" href="{{asset('assets/admin_plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}" />
+<!-- tags Input  -->
+<link rel="stylesheet" href="{{asset('assets/admin_plugins/taginput/tagsinput.css')}}" />
+
 <!-- summernote -->
-<link rel="stylesheet" href="{{ asset('assets/admin_plugins/summernote/summernote-bs4.css')}}">
+<link rel="stylesheet" href="{{ asset('assets/admin_plugins/summernote/summernote-bs4.css')}}" />
+
 <style>
     .upload__box {
         padding: 5px;
@@ -432,6 +486,11 @@ Enable Discount                 </label>
     .hidden {
         display: none;
     }
+    .img-thumbnail{
+        max-height: 300px;
+        max-width 400px;
+
+    }
 </style>
 @endsection
 
@@ -442,6 +501,8 @@ Enable Discount                 </label>
 <script src="{{asset('assets/admin_plugins/select2/js/select2.full.min.js')}}"></script>
 <!-- summernote bs4 -->
 <script src="{{asset('assets/admin_plugins/summernote/summernote-bs4.min.js')}}"></script>
+<!-- Tags Input  -->
+<script src="{{asset('assets/admin_plugins/taginput/tagsinput.js')}}"></script>
 <script>
     $(function() {
         //Initialize Select2 Elements
@@ -491,6 +552,7 @@ Enable Discount                 </label>
                 });
             });
         });
+
         $('body').on('click', ".upload__img-close", function(e) {
             var file = $(this).parent().data("file");
             for (var i = 0; i < imgArray.length; i++) {
@@ -504,10 +566,11 @@ Enable Discount                 </label>
     }
 
     const slugify = (str) => {
+      
         str = str.replace(/^\s+|\s+$/g, ''); // trim
         str = str.toLowerCase();
-        // remove accents, swap ñ for n, etc
-        var from = "àáãäâèéëêìíïîòóöôùúüûñç·/_,:;";
+        // remove accents, swap Ã± for n, etc
+        var from = "Ã Ã¡Ã£Ã¤Ã¢Ã¨Ã©Ã«ÃªÃ¬Ã­Ã¯Ã®Ã²Ã³Ã¶Ã´Ã¹ÃºÃ¼Ã»Ã±Ã§Â·/_,:;";
         var to = "aaaaaeeeeiiiioooouuuunc------";
         for (var i = 0, l = from.length; i < l; i++) {
             str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
@@ -518,7 +581,7 @@ Enable Discount                 </label>
         return str;
     }
     $('#title').on('keyup', function() {
-        var url = slugify($(this).val());
+        var url =  slugify($(this).val());
         $('#url').html(url);
         $('#slug').val(url);
     });
@@ -529,94 +592,34 @@ Enable Discount                 </label>
             theme: 'spacelab'
         }
     });
-    $('#btn-add').on('click', function(e) {
-      makeOption();
-    })
-    $('#btn-remove').on('click', function(e) {
-        var extras = document.getElementById('extras');
-        extras.removeChild(extras.lastChild);
 
-    });
-
-    const makeOption = () => {
-            let choice = prompt('Please Entile Extra Option');
-            if (choice) {
-          
-  // Create a div
-  var div = document.createElement("div");
-  div.className="m-2 p-2 d-flex"
-  div.innerHTML += `
- 
- <span class="m-2 text-dark text-bold" >${choice}</span>
- `;         // Create a text node
-
-
-// Create a text input
-var text = document.createElement("input");
-text.className="form-control";
-text.setAttribute("type", "text");
-text.setAttribute("name", extras[choice]); // you may want to change this
-
-// add the file and text to the div
-div.appendChild(text);
-
-
-div.innerHTML+=` <button class="btn btn-sm btn-danger pull-right" onClick="return removeThis(this)">  <i class="fa fa-trash"></i></button>`;
-
-
-//Append the div to the container div
-document.getElementById("extras").appendChild(div);
-
-            }
-
-
-    }
-
-function removeThis(e){
-    e.parentNode.remove();
-}
-
-
-
-const createStock = () => {
-let sizeRange=$('#size_range option:selected').val();
-let split=sizeRange.split("-");
-let text='{';
-
-for (i = split[0]; i < parseInt(split[1])+1; i++) {
-  text +=`"${i}":2`;
-  if(i < parseInt(split[1]))
-  text+=',';
-
-}
-text+='}';
-$('#stock').attr("value", text);
-
-
-}
-
-
-$('#size_range').on("change",function() {
-    createStock();
-});
-   
-$('#stock').on("focus", function(){
-    if($('#size_range').val()==0)
-    alert('Please select Size Range First, so that we could make it easy to add sizes according stock')
-});
-
-
-
-const reconstructStock = () =>{
-    let stock=$('#stock').val();
-    let res = stock.replace(/"/g, '').replace('[','').replace(']','');
-    $('#stock').val(res);
-}
+    
+  
 
 // In your Javascript (external .js resource or <script> tag)
 $(document).ready(function() {
     $('#brand_id').select2();
     $('#product_color').select2();
+});
+
+const createStock = () => {
+let sizeRange=$('#size_range option:selected').val();
+let split=sizeRange.split("-");
+let text='';
+
+for (i = split[0]; i < parseInt(split[1])+1; i++) {
+  text +=`${i}:2`;
+  if(i < parseInt(split[1]))
+  text+=',';
+
+}
+$('#stock').attr("value", text);
+
+
+}
+
+$('#size_range').on("change",function() {
+
     createStock();
 
 });
@@ -624,7 +627,6 @@ $(document).ready(function() {
 
 
 </script>
-
 
 
 

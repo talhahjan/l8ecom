@@ -71,7 +71,9 @@
                                       
 <select name="brand_id" id="brand_id" class="form-control select2">
 @foreach($brands as $brand)
-<option value="{{$brand->id}}">{{$brand->title}}</option>
+
+<option value="{{$brand->id}}" {{old('brand_id')==$brand->id ? ' selected': ''}}>{{$brand->title}}</option>
+
 @endforeach
 </select>
 
@@ -269,7 +271,7 @@ Enable Discount             </label>
 <!-- stock availibilty by size  -->
 <div class="form-group">
     <label for="stock">Stock Availibility By Size</label>
-    <input type="text" class="form-control" id="stock"  name="stock" value="{{old('stock')}}" placeholder='"1":2, "2":3, "3":5'>
+    <input type="text" class="form-control" id="stock"  name="stock" value="{{old('stock')}}" placeholder='1:2,2:3,3:5'>
     <small class="form-text text-muted">Please tell us how many pairs of which size you have in this product i.e "1":2, "2":3 means you have 2 pairs of size 1 and 3 pairs of size 2</small>
   </div>
 <!-- stock availibilty by size  -->
@@ -285,8 +287,8 @@ Enable Discount             </label>
     <label for="product_color">Color of Product</label>
     <select name="product_color" id="product_color" class="custom-select select2">
     <option value="">Select Color</option>
- @foreach($colors as $key2=> $val2)
-<option value="{{$key2}}"{{old('product_color')==$key2 ? ' selected': ''}}>{{$key2}}</option>
+ @foreach($colors as $key=> $val)
+<option value="{{$key}}"{{old('product_color')==$key ? ' selected': ''}}>{{$key}}</option>
 @endforeach
 
     </select>
@@ -318,7 +320,6 @@ Enable Discount             </label>
                             <button type="button" class="btn btn-outline collapsed" data-toggle="collapse" data-target="#collapseExtras" aria-expanded="false" aria-controls="collapseExtras">
                                 <strong> Attributes</strong>
                             </button>
-
                         </h5>
                     
                     </div>
@@ -327,23 +328,20 @@ Enable Discount             </label>
                           <div class="m-2 p-2 d-flex">
 
                           <span class="m-2 text-dark text-bold" >Origin</span>
-<input class="form-control" name="origin" value="Pakistan" />
+<input class="form-control" name="origin" value="{{old('origin') ? old('origin'): "pakistan"}}" />
 
-                        </div>
-
-
-
+</div>
                         <div class="m-2 p-2 d-flex">
 
 <span class="m-2 text-dark text-bold" >Article</span>
-<input class="form-control" type="text"  name="article"  />
+<input class="form-control" type="text"  value="{{old('article') ? old('article'): "123"}}"  />
 </div>
 
 
 <div class="m-2 p-2 d-flex">
 
 <span class="m-2 text-dark text-bold" >Material</span>
-<input class="form-control" type="text"  name="materials" data-role="tagsinput" value="pu,leather,fabric" />
+<input class="form-control" type="text"  name="materials" data-role="tagsinput" value="{{old('materials') ? old('materials'): "Pu, Leather, Rexine"}}" />
 
 </div>
 
@@ -351,7 +349,7 @@ Enable Discount             </label>
 <div class="m-2 p-2 d-flex">
 
 <span class="m-2 text-dark text-bold" >Warranty</span>
-<input class="form-control" type="text"  name="warranty" value="No warranty" />
+<input class="form-control" type="text"  name="warranty" value="{{old('warranty') ? old('warranty'): "No Warranty"}}" />
 </div>
 
 
@@ -359,7 +357,7 @@ Enable Discount             </label>
 <div class="m-2 p-2 d-flex">
 
 <span class="m-2 text-dark text-bold" >Features</span>
-<input class="form-control" type="text"  name="features" data-role="tagsinput" value="Good Looking,washable,Shock absorbent, Designer,Light Weight, Comfortable" />
+<input class="form-control" type="text"  name="features" data-role="tagsinput" value="{{old('features') ? old('features'): "Good Looking,washable,Shock absorbent, Designer,Light Weight, Comfortable"}}"  />
 
 </div>
 
@@ -368,10 +366,6 @@ Enable Discount             </label>
                     </div>
                 </div>
                 <!-- Extras card ends -->
-
-
-
-
                 <div>
                     <button type="submit" type="submit" class="btn btn-block btn-outline-primary"><i class="fas fa-plus-circle"></i> Add Product</button>
                 </div>

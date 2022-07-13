@@ -20,57 +20,57 @@ class CategorySectionSeeder extends Seeder
             'title'=>$sectionTitle,
             'slug'=>Str::Slug($sectionTitle),
         ]);
-       $categoryTitle='Shoes';
-        $category = Category::create([
-            'title' => $categoryTitle,
-            'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
-             'section_id'=>$section->id,
-        ]);
+    //    $categoryTitle='Shoes';
+    //     $category = Category::create([
+    //         'title' => $categoryTitle,
+    //         'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
+    //          'section_id'=>$section->id,
+    //     ]);
 
-        $categoryTitle='Slipers';
-        $category = Category::create([
-            'title' => $categoryTitle,
-            'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
-             'section_id'=>$section->id,
-        ]);
-
-
-        $categoryTitle='Canvas';
-        $category = Category::create([
-            'title' => $categoryTitle,
-            'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
-             'section_id'=>$section->id,
-        ]);
+    //     $categoryTitle='Slipers';
+    //     $category = Category::create([
+    //         'title' => $categoryTitle,
+    //         'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
+    //          'section_id'=>$section->id,
+    //     ]);
 
 
-        $categoryTitle='Office Shoes';
-        $category = Category::create([
-            'title' => $categoryTitle,
-            'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
-             'section_id'=>$section->id,
-        ]);
-
-        $categoryTitle='Casual';
-        $category = Category::create([
-            'title' => $categoryTitle,
-            'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
-             'section_id'=>$section->id,
-        ]);
-
-        $categoryTitle='Flip-flops';
-        $category = Category::create([
-            'title' => $categoryTitle,
-            'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
-             'section_id'=>$section->id,
-        ]);
+    //     $categoryTitle='Canvas';
+    //     $category = Category::create([
+    //         'title' => $categoryTitle,
+    //         'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
+    //          'section_id'=>$section->id,
+    //     ]);
 
 
-        $categoryTitle='Sliders';
-        $category = Category::create([
-            'title' => $categoryTitle,
-            'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
-             'section_id'=>$section->id,
-        ]);
+    //     $categoryTitle='Office Shoes';
+    //     $category = Category::create([
+    //         'title' => $categoryTitle,
+    //         'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
+    //          'section_id'=>$section->id,
+    //     ]);
+
+    //     $categoryTitle='Casual';
+    //     $category = Category::create([
+    //         'title' => $categoryTitle,
+    //         'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
+    //          'section_id'=>$section->id,
+    //     ]);
+
+    //     $categoryTitle='Flip-flops';
+    //     $category = Category::create([
+    //         'title' => $categoryTitle,
+    //         'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
+    //          'section_id'=>$section->id,
+    //     ]);
+
+
+    //     $categoryTitle='Sliders';
+    //     $category = Category::create([
+    //         'title' => $categoryTitle,
+    //         'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
+    //          'section_id'=>$section->id,
+    //     ]);
     
     //  Section ladies Started
 
@@ -83,78 +83,79 @@ $section=Section::create([
 
 
 
-$categoryTitle='Shoes';
-$category = Category::create([
-    'title' => $categoryTitle,
-    'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
-     'section_id'=>$section->id,
-]);
+// $categoryTitle='Shoes';
+// $category = Category::create([
+//     'title' => $categoryTitle,
+//     'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
+//      'section_id'=>$section->id,
+// ]);
 
-$categoryTitle='Pumps';
-$category = Category::create([
-    'title' => $categoryTitle,
-    'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
-     'section_id'=>$section->id,
-]);
-
-
-
-$categoryTitle='Kulapuri';
-$category = Category::create([
-    'title' => $categoryTitle,
-    'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
-     'section_id'=>$section->id,
-]);
-
-
-$categoryTitle='Kusas';
-$category = Category::create([
-    'title' => $categoryTitle,
-    'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
-     'section_id'=>$section->id,
-]);
-
-
-$categoryTitle='Sandals';
-$category = Category::create([
-    'title' => $categoryTitle,
-    'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
-     'section_id'=>$section->id,
-]);
+// $categoryTitle='Pumps';
+// $category = Category::create([
+//     'title' => $categoryTitle,
+//     'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
+//      'section_id'=>$section->id,
+// ]);
 
 
 
-$categoryTitle='Casual';
-$category = Category::create([
-    'title' => $categoryTitle,
-    'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
-     'section_id'=>$section->id,
-]);
+// $categoryTitle='Kulapuri';
+// $category = Category::create([
+//     'title' => $categoryTitle,
+//     'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
+//      'section_id'=>$section->id,
+// ]);
 
 
-$categoryTitle='Wedges';
-$category = Category::create([
-    'title' => $categoryTitle,
-    'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
-     'section_id'=>$section->id,
-]);
+// $categoryTitle='Kusas';
+// $category = Category::create([
+//     'title' => $categoryTitle,
+//     'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
+//      'section_id'=>$section->id,
+// ]);
 
 
-$categoryTitle='Bridals';
-$category = Category::create([
-    'title' => $categoryTitle,
-    'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
-     'section_id'=>$section->id,
-]);
+// $categoryTitle='Sandals';
+// $category = Category::create([
+//     'title' => $categoryTitle,
+//     'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
+//      'section_id'=>$section->id,
+// ]);
 
 
-$categoryTitle='Highy Heels';
-$category = Category::create([
-    'title' => $categoryTitle,
-    'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
-     'section_id'=>$section->id,
-]);
 
-    }
+// $categoryTitle='Casual';
+// $category = Category::create([
+//     'title' => $categoryTitle,
+//     'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
+//      'section_id'=>$section->id,
+// ]);
+
+
+// $categoryTitle='Wedges';
+// $category = Category::create([
+//     'title' => $categoryTitle,
+//     'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
+//      'section_id'=>$section->id,
+// ]);
+
+
+// $categoryTitle='Bridals';
+// $category = Category::create([
+//     'title' => $categoryTitle,
+//     'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
+//      'section_id'=>$section->id,
+// ]);
+
+
+// $categoryTitle='Highy Heels';
+// $category = Category::create([
+//     'title' => $categoryTitle,
+//     'slug'=>Str::Slug($sectionTitle.' '.$categoryTitle),
+//      'section_id'=>$section->id,
+// ]);
+
+//
+     }
 
 }

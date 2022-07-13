@@ -189,58 +189,66 @@ public function single(Product $product){
     public function update(Request $request, Product $product)
     {
 
-        // $validatedData = $request->validate([
-        //     'title' => 'required|max:255',
-        //     'price' => 'required|numeric',
-        //     'product_color' => 'required',
-        //     'size_range' => 'required',
-        //     'stock' => 'required',
-        //    'categories'=>'required'
-
-        // ]);
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'price' => 'required|numeric',
+            'product_color' => 'required',
+            'size_range' => 'required',
+            'stock' => 'required',
+           'categories'=>'required'
+        ]);
         
-        // make stock by sizes jsone data 
-        $stocks=str_replace("}", "", $request->stock);
-        $stocks=str_replace("{", "", $stocks);
-        $stocks=explode(',', $stocks);
+     // make stock by sizes jsone data 
+     $stocks=explode(',',$request->stock);
+     $newStock=array();
+
+     foreach($stocks as $stock){
+         $item=explode(":", $stock);
+       array_push($newStock, $item);
+     }
 
 
+      $attributes_features=explode(',', $request->features);
+      $attributes_materials=explode(',', $request->materials);
+
+   
 
 
 
             $updateProduct = Product::where("id", $product->id)->update([
-                // 'title' => $request->title,
-                // 'slug' => $request->slug,
-                // 'description' => $request->description,
-                // 'status' => $request->status,
-                'options' => substr($product->options,1-1),
-                // 'brand_id' => $request->brand_id,
-                // 'featured' => isset($request->featured) ? 1 : 0,
-                // 'price' => $request->price,
-                // 'discount_price'=>$request->discount_price,
-                // 'discount'=>isset($request->discount) ? 1: 0,
-                // 'color' => $request->product_color,
-                // 'stock' => json_encode($stocks),
-                // 'size_range' =>$request->size_range,
-                // //'size_range' =>str_replace('-', '_', $request->size_range),
-
-    
+                'title' => ucwords($request->title),
+                'slug' => $request->slug,
+                'description' => $request->description,
+                'status' => $request->status,
+                'brand_id' => $request->brand_id,
+                'featured' => isset($request->featured) ? 1 : 0,
+                'price' => $request->price,
+                'discount_price'=>$request->discount_price,
+                'discount'=>isset($request->discount) ? 1: 0,
+                'color' => $request->product_color,
+                'stock' => json_encode($newStock),
+                'size_range' =>$request->size_range,
+                'origin'=>$request->origin,
+                'article'=>$request->article,
+                'warranty'=>$request->warranty,
+                'features'=>$request->features ? json_encode($attributes_features): null,
+                'materials'=>$request->materials ? json_encode($attributes_materials): null,
             ]);
 
 
 
-        // if (isset($request->thumbnails)) {
-        //     foreach ($request->thumbnails as $thumbnail) {
-        //         $extension = "." . $thumbnail->getClientOriginalExtension();
-        //         $name = basename($thumbnail->getClientOriginalName(), $extension) . time();
-        //         $name = $updateProduct->slug . $extension;
-        //         $path = $thumbnail->storeAs('products/thumbnails', $name, 'local');
-        //         $thumb = Thumbnail::create([
-        //             'path' => 'uploads/' . $path,
-        //             'product_id' => $product->id,
-        //         ]);
-        //     }
-        // }
+        if (isset($request->thumbnails)) {
+            foreach ($request->thumbnails as $thumbnail) {
+                $extension = "." . $thumbnail->getClientOriginalExtension();
+                $name = basename($thumbnail->getClientOriginalName(), $extension) . time();
+                $name = $updateProduct->slug . $extension;
+                $path = $thumbnail->storeAs('products/thumbnails', $name, 'local');
+                $thumb = Thumbnail::create([
+                    'path' => 'uploads/' . $path,
+                    'product_id' => $product->id,
+                ]);
+            }
+        }
 
 
 
@@ -248,15 +256,15 @@ public function single(Product $product){
 
 
         // detach previously saved categories
-        // $product->categories()->detach();
+        $product->categories()->detach();
        
         // attach updated categories 
-        //  $product->categories()->attach($request->categories);
+         $product->categories()->attach($request->categories);
 
         if ($updateProduct) {
-            return back()->with('message', 'Section has been updated success fully :)');
+            return redirect()->route('admin.product.edit', $request->slug)->with('message', 'Section has been updated success fully :)');
         } else {
-            return back()->with('error', 'error updating Section');
+            redirect()->route('admin.product.edit', $request->slug)->with('error', 'error updating Section');
         }
     }
 
@@ -287,13 +295,8 @@ public function single(Product $product){
     public function destroy(Request $request)
     {
 
-$res = Product::where('id', $request->record_id)->delete();
-$res2 = Thumbnail::where('product_id', $request->record_id)->delete();
-        $obj = array();
-        $obj['msg'] = 'Error deleting Record';
-        $obj['type'] = 'danger';
-
-        if ($res && $res2) {
+$delete = Product::where('id', $request->record_id)->delete();
+        if ($delete) {
             $obj['msg'] = 'Record has been deleted successfully';
             $obj['type'] = 'success';
         }

@@ -27,10 +27,13 @@ class DatabaseSeeder extends Seeder
               ]);
 
 // The Perfect way to create fake data 
-              Category::factory()->count(20)->
-              has(Product::factory()->count(rand(50,100))->has(
+              Category::factory()->count(16
+              )->
+
+              has(Product::factory()->count(rand(1,5
+              ))->has(
                 Thumbnail::factory()
-                        ->count(rand(1,6))
+                        ->count(rand(1,2))
                         ->state(function (array $attributes, Product $product) {
                             return ['product_id' => $product->id];
                         })

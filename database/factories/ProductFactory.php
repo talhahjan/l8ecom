@@ -39,7 +39,7 @@ class ProductFactory extends Factory
             'origin'=> $this->faker->randomElement(['Pakistan', 'China','Vietname', 'USA',' India']),
             'article'=>$this->faker->numberBetween($min = 100, $max = 1000),
             'warranty'=>'No Warranty',
-            'features'=>'[["Good Looking","washable","Shock absorbent"," Designer","Light Weight"," Comfortable"]]',
+            'features'=>'["Good Looking","washable","Shock absorbent"," Designer","Light Weight"," Comfortable"]',
             'materials'=>'["pu","leather","fabric"]',
             'discount'=>rand(0,1),
             'featured'=>rand(0,1),

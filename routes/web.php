@@ -16,13 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 use App\Category;
 use App\Product;
-
 Auth::routes();
 
 
 
 Route::group(['as' => 'user.', 'prefix' => '/', 'middleware' => 'auth'], function () {
-    Route::get('', [App\Http\Controllers\HomeController::class, 'index'] )->name('home');
+ Route::get('', [App\Http\Controllers\HomeController::class, 'index'] )->name('home');
     Route::get('product/{product}', [App\Http\Controllers\ProductController::class,'single'])->name('single');
     Route::get('collection/{collection}', [App\Http\Controllers\CategoryController::class,'collection'])->name('collection');
     });
