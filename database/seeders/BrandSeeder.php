@@ -85,13 +85,13 @@ class BrandSeeder extends Seeder
         ]);
 
         $brand = Brand::create([
-            'title' => 'CatterPiller',
-            'logo'=>'/uploads/brands/logoes/dwd.jpeg',
+            'title' => 'Cat',
+            'logo'=>'/uploads/brands/logoes/cat.jpeg',
         ]);
 
         $brand = Brand::create([
             'title' => 'Clark',
-            // 'logo'=>'/uploads/brands/logoes/dwd.jpeg',
+            'logo'=>'/uploads/brands/logoes/clark.jpg',
         ]);
 
 

@@ -56,7 +56,7 @@ class AdminUserProfile extends Seeder
             'address' => 'Address Address Address Address Address Address Address Address ',
             'user_id' => $user->id,
             'slug' => 'muhammad-talhah',
-            'avatar' => asset('uploads/users/avatars/admin.jpg'),
+            'avatar' => uploads/users/avatars/admin.jpg,
         ]);
 
 
@@ -79,7 +79,7 @@ class AdminUserProfile extends Seeder
             'address' => 'Address Address Address Address Address Address Address Address ',
             'user_id' => $user->id,
             'slug' => 'muhammad-khalid-dealer',
-            'avatar' => asset('uploads/users/avatars/superadmin.jpg'),
+            'avatar' => 'uploads/users/avatars/superadmin.jpg',
 
         ]);
 
@@ -102,7 +102,7 @@ class AdminUserProfile extends Seeder
             'address' => 'Address Address Address Address Address Address Address Address ',
             'user_id' => $user->id,
             'slug' => 'muhammad-yusuf',
-            'avatar' => asset('uploads/users/avatars/customer.jpg'),
+            'avatar' => 'uploads/users/avatars/customer.jpg',
 
         ]);
 

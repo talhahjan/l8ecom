@@ -13,13 +13,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\facades\Validator;
 use Illuminate\Support\Arr;
-
-
 use Auth;
 class ApiController extends Controller
 {
-
-
 
     /**
      * Get a validator for an incoming registration request.
@@ -112,19 +108,14 @@ $validator = Validator::make($request->all(),[
        'status_message'=>'ok',
         'user'=>[
         'id'=>$userInfo->id,
-       'provider'=>$userInfo->profile->provider,
-       'provider_id'=>$userInfo->profile->profiver_id,
-        'fullname'=>$userInfo->profile->first_name.' '.$user->profile->last_name,
         'first_name'=>$userInfo->profile->first_name,
         'last_name'=>$userInfo->profile->last_name,
         'email'=>$userInfo->email,
-        'role'=>$userInfo->role->name,
-        'avatar'=>is_link($userInfo->profile->avatar) ? $userInfo->profile->avatar: asset($userInfo->profile->avatar),
-        'country'=>$userInfo->country,
-       'state'=>$userInfo->state,
-        'city'=>$userInfo->city,
+        // 'avatar'=>is_link($userInfo->profile->avatar) ? $userInfo->profile->avatar: asset($userInfo->profile->avatar),
+        'avatar'=>asset($userInfo->profile->avatar),
        ],
-         'token'=>$token,
+        'status'=> 201,
+        'token'=>$token,
          'message'=>'Login Successfully'
         ]);
       }

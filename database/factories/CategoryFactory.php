@@ -29,7 +29,7 @@ class CategoryFactory extends Factory
 
 
 
-        $title=$this->faker->unique()->sentence(3);
+        $title=$this->faker->unique()->sentence(2);
         return [
             'title' => $title,
             'slug' => Str::slug($title),
