@@ -58,17 +58,10 @@ return response()->json([
              'status_message'=>'ok',
              'user'=>[
              'id'=>$user->id,
-             'provider'=>$profile->provider,
-             'provider_id'=>$profile->profiver_id,
-             'fullname'=>$profile->first_name.' '.$profile->last_name,
              'first_name'=>$profile->first_name,
              'last_name'=>$profile->last_name,
              'email'=>$user->email,
-             'role'=>'customer',
-             'avatar'=>is_link($userInfo->profile->avatar) ? $userInfo->profile->avatar: asset($userInfo->profile->avatar),
-             'country'=>$profile->country,
-            'state'=>$profile->state,
-             'city'=>$profile->city
+             'avatar'=>$profile->avatar,
             ],
               'token'=>$token,
               'message'=>'Register Successfully'
@@ -111,7 +104,6 @@ $validator = Validator::make($request->all(),[
         'first_name'=>$userInfo->profile->first_name,
         'last_name'=>$userInfo->profile->last_name,
         'email'=>$userInfo->email,
-        // 'avatar'=>is_link($userInfo->profile->avatar) ? $userInfo->profile->avatar: asset($userInfo->profile->avatar),
         'avatar'=>asset($userInfo->profile->avatar),
        ],
         'status'=> 201,
