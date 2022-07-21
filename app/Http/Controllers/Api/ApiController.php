@@ -231,7 +231,7 @@ $cart=User::with('favorites')->where('id', $userId)->first();
    return $data;
      }
     
-function getUserInfo(){
+function getProfile(){
 $userId=auth()->user()['id'];
 $userInfo=User::where('id', $userId)->with('profile')->first();
   return $userInfo;

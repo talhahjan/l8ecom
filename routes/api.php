@@ -16,7 +16,7 @@ use App\Http\Controllers\Api\ApiController;
 Route::group(['as' => 'api.', 'prefix' => '/','middleware'=>'auth:sanctum'], function () {
 Route::get('user/cart',[ApiController::class, 'userCart'])->name('user.cart');
 Route::get('user/favorites',[ApiController::class, 'userFavorites'])->name('user.favorites');
-Route::get("getuserinfo", [ApiController::class, 'getUserInfo'])->name('userinfo');
+Route::get("user/profile", [ApiController::class, 'getProfile'])->name('user.profile');
 Route::post("logout", [ApiController::class, 'logout'])->name('logout');
 });
 
