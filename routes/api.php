@@ -17,11 +17,13 @@ Route::group(['as' => 'api.', 'prefix' => '/','middleware'=>'auth:sanctum'], fun
 Route::get('user/cart',[ApiController::class, 'userCart'])->name('user.cart');
 Route::get('user/favorites',[ApiController::class, 'userFavorites'])->name('user.favorites');
 Route::get("user/profile", [ApiController::class, 'getProfile'])->name('user.profile');
+// Route::post("user/profile/edit", [ApiController::class, 'updateProfile'])->name('update.profile');
 Route::post("logout", [ApiController::class, 'logout'])->name('logout');
 });
 
 Route::group(['as' => 'api.', 'prefix' => '/'], function () {
 Route::get("sections", [ApiController::class, 'fetchSections'])->name('sections');
+Route::post("user/profile/edit", [ApiController::class, 'updateProfile'])->name('update.profile');
 Route::get("product/{slug}", [ApiController::class, 'fetchProduct'])->name('product');
 
 Route::get("section/{section}", [ApiController::class, 'fetchSection'])->name('section');

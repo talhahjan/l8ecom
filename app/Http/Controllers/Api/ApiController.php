@@ -11,7 +11,7 @@ use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\facades\Validator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 use Auth;
 class ApiController extends Controller
@@ -245,5 +245,27 @@ auth()->user()->currentAccessToken()->delete();
   'message'=>'Successfuly Logged Out !!',
 ]);
 }
+
+function updateProfile(Request $request){
+  
+  
+  $userId=auth()->user()['id'];
+
+
+  $updateProfile=Profile::where('user_id',1)->update([
+    'first_name'=>$request->first_name,
+    'last_name'=>$request->last_name,
+     'phone'=>$request->mobile,
+    'country'=>$request->country,
+    'state'=>$request->state,
+    'address'=>$request->address,
+  ]);
+
+  return response()->json(
+  $request
+  );
+  }
+  
+
 
 }

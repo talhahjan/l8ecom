@@ -56,7 +56,7 @@ class AdminUserProfile extends Seeder
             'address' => 'Address Address Address Address Address Address Address Address ',
             'user_id' => $user->id,
             'slug' => 'muhammad-talhah',
-            'avatar' => uploads/users/avatars/admin.jpg,
+            'avatar' => 'uploads/users/avatars/admin.jpg',
         ]);
 
 
