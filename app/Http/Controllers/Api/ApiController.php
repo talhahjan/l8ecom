@@ -262,7 +262,7 @@ function updateProfile(Request $request){
   ]);
 
   return response()->json(
-  $request
+  $updateProfile
   );
   }
   
