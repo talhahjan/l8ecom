@@ -3,6 +3,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +17,10 @@ use App\Http\Controllers\Api\AuthController;
 */
 
 Route::group(['as' => 'api.', 'prefix' => '/','middleware'=>'auth:sanctum'], function () {
-Route::get('user/cart',[ApiController::class, 'userCart'])->name('user.cart');
-Route::get('user/favorites',[ApiController::class, 'userFavorites'])->name('user.favorites');
-Route::get("user/profile", [ProfileController::class, 'index'])->name('user.profile');
-Route::post("user/profile/edit", [ProfileController::class, 'update'])->name('update.profile');
+Route::get('user/cart',[UserController::class, 'cart'])->name('user.cart');
+Route::get('user/favorites',[UserController::class, 'favorites'])->name('user.favorites');
+Route::get("user/profile", [UserController::class, 'profile'])->name('user.profile');
+Route::post("user/profile/edit", [UserController::class, 'updateProfile'])->name('update.profile');
 Route::post("logout", [AuthController::class, 'logout'])->name('logout');
 });
 

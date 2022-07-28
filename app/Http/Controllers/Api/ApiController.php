@@ -74,32 +74,6 @@ public function getLatestProduct(){
     }
     
     
-    public function userFavorites(){
-      $userId=auth()->user()['id'];
-   
-$cart=User::with('favorites')->where('id', $userId)->first();
- return response()->json(
- $cart->favorites
-  );
-    }
-
-    
-    public function userCart(Request $request){
-      $userId=auth()->user()['id'];
-   
-      if($userId){
-      return response()->json([
-        'staus'=>202,
-        'message'=>'Please login to view cart',
-      ]);
-    }
-
-      $cart=User::find($userId)->with('cart')->first();
-    
-    return response()->json(
-    $cart
-    );
-    }
 
 
     public function getFeaturedProduct(){

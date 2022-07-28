@@ -14,9 +14,9 @@ use App\Models\Profile;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 
-class ProfileController extends Controller
+class UserController extends Controller
 {
-    public function index(){
+    public function profile(){
     $userId=auth()->user()['id'];
     $userInfo=User::where('id', $userId)->with('profile')->first();
     return response()->json($userInfo);
@@ -25,7 +25,7 @@ class ProfileController extends Controller
 
 
 
-    public function update(Request $request){
+    public function updateProfile(Request $request){
     
   $userId=auth()->user()['id'];
   $updateProfile=Profile::where('user_id',$userId)->update([
@@ -53,4 +53,38 @@ return response()->json([
 
 
     }
+
+
+
+
+    public function favorites(){
+        $userId=auth()->user()['id'];
+     
+  $cart=User::with('favorites')->where('id', $userId)->first();
+   return response()->json(
+   $cart->favorites
+    );
+      }
+  
+      
+      public function Cart(Request $request){
+        $userId=auth()->user()['id'];
+     
+        if($userId){
+        return response()->json([
+          'staus'=>202,
+          'message'=>'Please login to view cart',
+        ]);
+      }
+  
+        $cart=User::find($userId)->with('cart')->first();
+      
+      return response()->json(
+      $cart
+      );
+      }
+
+
+
+
 }
