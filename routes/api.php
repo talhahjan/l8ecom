@@ -2,6 +2,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,9 +18,9 @@ use App\Http\Controllers\Api\ApiController;
 Route::group(['as' => 'api.', 'prefix' => '/','middleware'=>'auth:sanctum'], function () {
 Route::get('user/cart',[ApiController::class, 'userCart'])->name('user.cart');
 Route::get('user/favorites',[ApiController::class, 'userFavorites'])->name('user.favorites');
-Route::get("user/profile", [ApiController::class, 'getProfile'])->name('user.profile');
-Route::post("user/profile/edit", [ApiController::class, 'updateProfile'])->name('update.profile');
-Route::post("logout", [ApiController::class, 'logout'])->name('logout');
+Route::get("user/profile", [ProfileController::class, 'index'])->name('user.profile');
+Route::post("user/profile/edit", [ProfileController::class, 'update'])->name('update.profile');
+Route::post("logout", [AuthController::class, 'logout'])->name('logout');
 });
 
 Route::group(['as' => 'api.', 'prefix' => '/'], function () {
@@ -32,6 +34,6 @@ Route::get("brands", [ApiController::class, 'fetchBrands'])->name('brands');
 Route::get("brands/popular", [ApiController::class, 'BrandsWithLogoes'])->name('popular-brands');
 Route::get("products/latest", [ApiController::class, 'getLatestProduct'])->name('latest-products');
 Route::get("products/featured", [ApiController::class, 'getFeaturedProduct'])->name('featured-products');
-Route::post("login", [ApiController::class, 'login'])->name('login');
-Route::post("register", [ApiController::class, 'register'])->name('register');
+Route::post("login", [AuthController::class, 'login'])->name('login');
+Route::post("register", [AuthController::class, 'register'])->name('register');
 });

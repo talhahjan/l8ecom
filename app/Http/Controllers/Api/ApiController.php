@@ -24,94 +24,7 @@ class ApiController extends Controller
      * @return \Illuminate\Contracts\Validation\Validator
      */
 
-    function register(Request $request){
-//      dump($request->all());
-$validator = Validator::make($request->all(),[
-'first_name' => ['required', 'string', 'max:255'],
-'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-'password' => ['required', 'string', 'min:8', 'confirmed'],
-]);
 
-if($validator->fails())
-return response()->json([
-  'status'=>201,
-  'validation_errors'=>$validator->messages()
-],201);
-
-
-
-
-        $user =User::create([
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
-        ]);
-        if ($user) {
-           $profile= Profile::create([
-          'user_id'=>$user->id,
-          'first_name'=>$request->first_name,
-          'last_name'=>$request->last_name
-      ]);
-        
-            $token =$user->createToken('token-'.$user->email)->plainTextToken;
-            return response()->json([
-             'status'=>200,
-             'status_message'=>'ok',
-             'user'=>[
-             'id'=>$user->id,
-             'first_name'=>$profile->first_name,
-             'last_name'=>$profile->last_name,
-             'email'=>$user->email,
-             'avatar'=>$profile->avatar,
-            ],
-              'token'=>$token,
-              'message'=>'Register Successfully'
-            ], 200);
-        }
-    }
-
-    function login(Request $request){
-$validator = Validator::make($request->all(),[
-  'email' => ['required', 'string', 'email'],
-  'password' => ['required', 'string'],
-  ]);
-  
-  if($validator->fails())
-  return response()->json([
-    'status'=>201,
-    'validation_errors'=>$validator->messages()
-  ],201);
-
-
-
-
-      
-        if (!Auth::attempt($request->only('email','password'))) {
-            return response([
-            'message'=>'The Provided credentails are incorrect'
-          ], 201);
-        }
-        else{
-       
-          $user=Auth::user();
-
-       $userInfo=User::where('id', $user->id)->with('profile','role')->first();
-       $token= $user->createToken('token')->plainTextToken;
-       return response()->json([
-       'status'=>200,
-       'status_message'=>'ok',
-        'user'=>[
-        'id'=>$userInfo->id,
-        'first_name'=>$userInfo->profile->first_name,
-        'last_name'=>$userInfo->profile->last_name,
-        'email'=>$userInfo->email,
-        'avatar'=>asset($userInfo->profile->avatar),
-       ],
-        'status'=> 201,
-        'token'=>$token,
-         'message'=>'Login Successfully'
-        ]);
-      }
-      }
       
       function fetchProduct(Request  $request){
       $product=Product::with('thumbnails','categories')->where('slug', $request->slug)->firstOrFail(); 
@@ -231,41 +144,7 @@ $cart=User::with('favorites')->where('id', $userId)->first();
    return $data;
      }
     
-function getProfile(){
-$userId=auth()->user()['id'];
-$userInfo=User::where('id', $userId)->with('profile')->first();
-  return $userInfo;
-}
 
-
-public function logout() {
-auth()->user()->currentAccessToken()->delete();
-  return response([
-    'status'=>200,
-  'message'=>'Successfuly Logged Out !!',
-]);
-}
-
-function updateProfile(Request $request){
-  
-  
-  $userId=auth()->user()['id'];
-
-
-  $updateProfile=Profile::where('user_id',1)->update([
-    'first_name'=>$request->first_name,
-    'last_name'=>$request->last_name,
-     'phone'=>$request->mobile,
-    'country'=>$request->country,
-    'state'=>$request->state,
-    'address'=>$request->address,
-  ]);
-
-  return response()->json(
-  $updateProfile
-  );
-  }
-  
 
 
 }
